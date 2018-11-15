@@ -1,0 +1,35 @@
+{
+    "python.unitTest.pyTestArgs": [
+        "--no-cov",
+        "${workspaceFolder}/tests"
+    ],
+    "python.pythonPath": "~/.virtualenvs/pyfluent/bin/python",
+    "python.linting.flake8Enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.lintOnSave": true,
+    "python.linting.flake8Args": [
+        "--mypy-config=${workspaceRoot}/setup.cfg"
+    ],
+    "python.formatting.provider": "yapf",
+    "python.formatting.yapfArgs": [
+        "--style",
+        "${workspaceRoot}/.style.yapf"
+    ],
+    "python.unitTest.cwd": "${workspaceRoot}",
+    "python.unitTest.pyTestEnabled": true,
+    "python.workspaceSymbols.exclusionPatterns": [
+        "**/site-packages/**",
+        ".tox/**",
+        ".history/**"
+    ],
+    "files.exclude": {
+        "**/__pycache__": true,
+        "**/*.pyc": true,
+        ".tox": true,
+        ".pytest_cache": true,
+        ".coverage.*": true,
+        ".history/**": true,
+    },
+    "todo-tree.flat": true,
+    "todo-tree.grouped": false
+}

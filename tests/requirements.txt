@@ -1,0 +1,9 @@
+coverage>=4.4.1
+pytest==3.2.1
+pytest-xdist==1.20
+pytest-cov==2.5.1
+pytest-travis-fold
+mock==1.0.1
+flake8>=3.5.0
+flake8-mypy>=17.8.0
+yapf
