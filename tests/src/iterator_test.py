@@ -392,6 +392,69 @@ class FluentIteratorFirstTestCase(FluentIteratorTestBase):
         self.assertIsNone(self.iterator.first())
 
 
+class FluentIteratorEnumerateTestCase(FluentIteratorTestBase):
+
+    def setUp(self) -> None:
+        self.iterator_values = ['a', 'b', 'c']
+
+        (self.inner_iterable, self.iter_mock, self.next_mock) = \
+            _get_iterable(self.iterator_values)
+        self.iterator = FluentIterator(iter(self.inner_iterable))
+
+    def test_enumerate_is_non_terminal(self):
+        itr = self.iterator.enumerate()
+        self.iter_mock.assert_not_called()
+        self.next_mock.assert_not_called()
+        self.assertIsNot(itr, self.iterator)
+        self.assertIsInstance(itr, FluentIterator)
+        self.assertSequenceEqual(self.iterator.collect(), self.iterator_values)
+
+    def test_enumerate_transforms_elements(self):
+        self.assertSequenceEqual(
+            self.iterator.enumerate().collect(),
+            [(0, 'a'), (1, 'b'), (2, 'c')]
+        )
+
+
+class FluentIteratorSkipTestCase(FluentIteratorTestBase):
+
+    def setUp(self) -> None:
+        self.iterator_values = [1, 2, 3]
+
+        (self.inner_iterable, self.iter_mock, self.next_mock) = \
+            _get_iterable(self.iterator_values)
+        self.iterator = FluentIterator(iter(self.inner_iterable))
+
+    def test_skip_is_non_terminal(self):
+        itr = self.iterator.skip(1)
+        self.iter_mock.assert_not_called()
+        self.next_mock.assert_not_called()
+        self.assertIsNot(itr, self.iterator)
+        self.assertIsInstance(itr, FluentIterator)
+        self.assertSequenceEqual(self.iterator.collect(), self.iterator_values)
+
+    def test_skip_removes_elements(self):
+        self.assertSequenceEqual(
+            self.iterator.skip(1).collect(),
+            self.iterator_values[1:]
+        )
+
+    def test_skip_returns_no_items_if_requested_to_skip_too_much(self) -> None:
+        self.assertSequenceEqual(
+            self.iterator.skip(10).collect(),
+            []
+        )
+
+    def test_skip_expects_positive_value(self) -> None:
+        with self.assertRaises(ValueError):
+            self.iterator.skip(-1)
+
+    def test_skip_returns_all_items_if_given_0(self) -> None:
+        self.assertSequenceEqual(
+            self.iterator.skip(0).collect(),
+            self.iterator_values)
+
+
 class FluentIteratorFlattenTestCase(FluentIteratorTestBase):
 
     def setUp(self) -> None:

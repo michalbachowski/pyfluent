@@ -68,7 +68,7 @@ docs/_build
 
 # Get rid of zipapp artifacts
 /src/*
-!/src/checklisting
+!/src/pyfluent
 
 # IDE
 .history
