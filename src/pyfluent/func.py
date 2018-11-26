@@ -1,12 +1,9 @@
-from collections.abc import Callable, Iterator
-from typing import Any, TypeVar
+from typing import Any, Callable, Iterator, TypeVar
 
 O = TypeVar('O')
 T = TypeVar('T')
 
 
-def callUnpacked(predicate: T) -> Callable[Iterator[Any], O]:
-    def wrap(iterator: Iterator[Any]) -> O:
-        return predicate(*i)
-    return wrap
+def callUnpacked(predicate: T) -> Callable[[Iterator[Any]], O]:
+    return lambda it: predicate(*it)
 
